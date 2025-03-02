@@ -4,40 +4,37 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev        
-      - staging    
-      - main       
+      - dev
+      - staging
+      - main
   pull_request:
     branches:
-      - dev      
-      - staging 
+      - dev
+      - staging
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18]  
+        node-version: [18]
 
     steps:
-    
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-    
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: "npm"
 
-      
       - name: Install dependencies
-        working-directory: ./dashboard
-        run: npm install
+        working-directory: ./
+        run: npm ci
 
-     
       - name: Build Next.js project
-        working-directory: ./dashboard
+        working-directory: ./
         run: npm run build
 
   # deploy:
@@ -45,22 +42,24 @@ jobs:
   #   needs: build
   #   if: github.ref == 'refs/heads/main'  
 
-      
-        
   #   steps:
-  #     - uses: actions/checkout@v2  
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4  
+
   #     - name: Install Vercel CLI
-  #       working-directory: ./dashboard 
   #       run: npm install --global vercel@latest
+
   #     - name: Pull Vercel Environment Information
-  #       working-directory: ./dashboard 
+  #       working-directory: ./ 
   #       run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
   #     - name: Build Project Artifacts
-  #       working-directory: ./dashboard
+  #       working-directory: ./
   #       run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
   #     - name: Deploy Project Artifacts to Vercel
-  #       working-directory: ./dashboard
+  #       working-directory: ./
   #       run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
   #     - name: Notify Deployment Success
-  #       run: echo "Deployment to Vercel successful!"
+  #       run: echo "✅ Deployment to Vercel successful!"
