@@ -18,22 +18,7 @@ export const metadata: Metadata = {
   title: "Crib Hunt - Find Your Perfect Home",
   description: "Crib Hunt helps you find and rent homes easily, with verified listings and direct landlord contact.",
   icons: {
-    icon: "/Logo/logo.svg", // Ensure you have a favicon in the public directory
-  },
-  openGraph: {
-    title: "Crib Hunt - Find Your Perfect Home",
-    description: "Search for homes, view listings, and contact landlords directly with Crib Hunt.",
-    url: "https://cribhunt.com",
-    siteName: "Crib Hunt",
-    images: [
-      {
-        url: "/Logo/logo.svg", // Replace with your actual logo path
-        width: 1200,
-        height: 630,
-        alt: "Crib Hunt Logo",
-      },
-    ],
-    type: "website",
+    icon: "/Logo/logo.svg",
   },
 };
 
