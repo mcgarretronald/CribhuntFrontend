@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import Image from "next/image";
@@ -18,6 +18,15 @@ interface RegisterForm {
 }
 
 export default function Register() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <RegisterWithSearchParams />
+    </Suspense>
+  );
+}
+
+// Separate Component to Handle useSearchParams()
+function RegisterWithSearchParams() {
   const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -88,7 +97,7 @@ export default function Register() {
         }
       } catch (err) {
         console.error("Fetch error:", err);
-        setError("An unexpected error occurred.");
+        setError("Registration failed. Please try again Later.");
       } finally {
         setLoading(false);
       }
@@ -118,7 +127,6 @@ export default function Register() {
           <p className="text-xs text-gray-600">🚀 Join us and find your dream home!</p>
         </div>
 
-        {/* Input Fields */}
         {["username", "email", "phone_number"].map((field) => (
           <div key={field} className="text-sm">
             <input
@@ -137,7 +145,6 @@ export default function Register() {
           </div>
         ))}
 
-        {/* Password Fields */}
         {[
           { name: "password", show: showPassword, setShow: setShowPassword },
           { name: "confirm_password", show: showConfirmPassword, setShow: setShowConfirmPassword },
@@ -169,7 +176,6 @@ export default function Register() {
           </div>
         ))}
 
-        {/* Remember Me */}
         <div className="flex items-center text-xs">
           <input
             type="checkbox"
@@ -183,19 +189,9 @@ export default function Register() {
 
         {error && <p className="text-red-500 text-xs text-center whitespace-pre-line">{error}</p>}
 
-        {/* Register Button */}
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-[#03624C] text-white py-2 rounded-md hover:bg-[#162a21] transition flex justify-center items-center"
-        >
-          {loading ? (
-            <svg className="animate-spin h-4 w-4 mr-2 border-t-2 border-white rounded-full" viewBox="0 0 24 24"></svg>
-          ) : (
-            "Register"
-          )}
+        <button type="submit" disabled={loading} className="w-full bg-[#03624C] text-white py-2 rounded-md hover:bg-[#162a21] transition flex justify-center items-center">
+          {loading ? <div className="animate-spin h-4 w-4 mr-2 border-t-2 border-white rounded-full"></div> : "Register"}
         </button>
-
         <div className="text-center text-xs flex flex-col items-center">
           <p>or continue with</p>
           <button className="flex items-center justify-center p-2 bg-[#030F0F] text-white py-2 rounded-md">
@@ -211,4 +207,8 @@ export default function Register() {
       </form>
     </div>
   );
+}
+
+function LoadingFallback() {
+  return <div className="text-center text-gray-500">Loading...</div>;
 }
