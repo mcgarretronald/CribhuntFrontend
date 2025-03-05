@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
+// import { Auth0Provider } from "@auth0/auth0-react";
 import Loading from "./Components/Loading";
 
 export default function Home() {
@@ -35,5 +36,6 @@ export default function Home() {
       </p>
       <Loading />
     </motion.div>
+
   );
 }

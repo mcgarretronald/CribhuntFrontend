@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.3.0",
     "@types/yup": "^0.32.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.7",
