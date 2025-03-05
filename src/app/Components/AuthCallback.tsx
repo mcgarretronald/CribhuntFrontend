@@ -45,7 +45,11 @@ export default function AuthCallback() {
     }, [handleRedirectCallback, getAccessTokenSilently, isAuthenticated, router]);
 
     return (
-        <div className="flex justify-center flex-col space-y-5 items-center min-h-screen">
+        <div className="flex justify-center flex-col relative space-y-5 items-center min-h-screen">
+            {/* Blurry Decorative Element */}
+            <div className="absolute top-20 left-10 w-72 h-72 bg-[#00C767] opacity-20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#03624C] opacity-20 rounded-full blur-3xl"></div>
+
             <div className="flex justify-center">
                 <Image src="/Logo/longLogo.svg" width={200} height={300} alt="Welcome" />
             </div>

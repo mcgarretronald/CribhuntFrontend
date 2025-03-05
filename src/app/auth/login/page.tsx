@@ -99,7 +99,11 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen px-4">
+    <div className="flex justify-center  relative items-center min-h-screen px-4">
+        {/* Blurry Decorative Element */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#00C767] opacity-20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#03624C] opacity-20 rounded-full blur-3xl"></div>
+
       <form
         onSubmit={handleSubmit}
         className="md:border border-[#00C767] md:rounded-xl px-8 py-12 md:shadow-lg w-full max-w-md bg-[#F8F9FF] space-y-6"
