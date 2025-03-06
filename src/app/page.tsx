@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
-// import { Auth0Provider } from "@auth0/auth0-react";
 import Loading from "./Components/Loading";
 
 export default function Home() {
@@ -11,7 +10,12 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/auth/welcome");
+      const accessToken = localStorage.getItem("access_token");
+      if (accessToken) {
+        router.push("/home");
+      } else {
+        router.push("/auth/welcome");
+      }
     }, 5000);
     return () => clearTimeout(timer);
   }, [router]);
@@ -30,12 +34,11 @@ export default function Home() {
         minHeight: "100vh",
       }}
     >
-      <Image src="/Logo/longLogo.svg" width={500} height={500} alt="logo"className="w-3/4 md:w-1/2"  />
+      <Image src="/Logo/longLogo.svg" width={500} height={500} alt="logo" className="w-3/4 md:w-1/2" />
       <p className="text-xl text-center">
         Find your Perfect Crib, Hassle Free
       </p>
       <Loading />
     </motion.div>
-
   );
 }
