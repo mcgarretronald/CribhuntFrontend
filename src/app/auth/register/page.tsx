@@ -51,15 +51,15 @@ function RegisterWithSearchParams() {
       rememberMe: true,
     },
     validationSchema: Yup.object({
-      username: Yup.string().min(3, "Must be at least 3 characters").required("Required"),
-      email: Yup.string().email("Invalid email").required("Required"),
+      username: Yup.string().min(3, "Must be at least 3 characters"),
+      email: Yup.string().email("Invalid email"),
       phone_number: Yup.string()
         .matches(/^\d{10}$/, "Phone number must be 10 digits")
-        .required("Required"),
-      password: Yup.string().min(6, "Password must be at least 6 characters").required("Required"),
+        ,
+      password: Yup.string().min(6, "Password must be at least 6 characters"),
       confirm_password: Yup.string()
         .oneOf([Yup.ref("password")], "Passwords must match")
-        .required("Required"),
+        ,
     }),
     onSubmit: async (values) => {
       setLoading(true);
