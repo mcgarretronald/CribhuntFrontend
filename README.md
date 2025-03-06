@@ -8,12 +8,9 @@ Crib Hunt is a Progressive Web Application (PWA) designed to simplify the house-
 - 📌 **Neighborhood Ratings** – Users can rate and review different areas.
 - 📞 **Direct Contact** – Connect with landlords and agencies without in-app booking.
 
-## Monetization
-Crib Hunt plans to generate revenue by charging a small fee for users to access contact details of house owners or agencies.
-
 ## Tech Stack
 - **Frontend**: Next.js, Tailwind CSS
-- **Backend**: Django, PostgreSQL
+- **Backend**: Django,
 - **Authentication**: Auth0
 - **Deployment**: Vercel,
 
