@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface RegisterForm {
   username: string;
@@ -30,6 +31,7 @@ function RegisterWithSearchParams() {
   const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
 
   const isLandlord = searchParams.get("is_landlord") === "true";
   const isRenter = searchParams.get("is_renter") === "true";
@@ -46,18 +48,18 @@ function RegisterWithSearchParams() {
       phone_number: "",
       password: "",
       confirm_password: "",
-      rememberMe: false,
+      rememberMe: true,
     },
     validationSchema: Yup.object({
-      username: Yup.string().min(3, "Must be at least 3 characters").required("Required"),
-      email: Yup.string().email("Invalid email").required("Required"),
+      username: Yup.string().min(3, "Must be at least 3 characters"),
+      email: Yup.string().email("Invalid email"),
       phone_number: Yup.string()
         .matches(/^\d{10}$/, "Phone number must be 10 digits")
-        .required("Required"),
-      password: Yup.string().min(6, "Password must be at least 6 characters").required("Required"),
+        ,
+      password: Yup.string().min(6, "Password must be at least 6 characters"),
       confirm_password: Yup.string()
         .oneOf([Yup.ref("password")], "Passwords must match")
-        .required("Required"),
+        ,
     }),
     onSubmit: async (values) => {
       setLoading(true);
@@ -113,8 +115,49 @@ function RegisterWithSearchParams() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleGoogleRegister = async () => {
+    try {
+      await loginWithRedirect({
+        appState: { returnTo: "/home" },
+        authorizationParams: {
+          audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
+        },
+      });
+
+      const accessToken = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
+        },
+      });
+
+      const res = await fetch(`${BaseUrl}/auth/auth0/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_token: accessToken,
+          is_landlord: isLandlord,
+          is_renter: isRenter,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Auth0 login failed");
+
+      // Store tokens and redirect to dashboard
+      localStorage.setItem("access_token", data.access_token);
+      router.push("/dashboard");
+    } catch (err) {
+      console.error("Google Registration Failed:", err);
+      alert("Google registration failed. Try again.");
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen px-4">
+    <div className="flex justify-center relative items-center min-h-screen px-4">
+        {/* Blurry Decorative Element */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#00C767] opacity-20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#03624C] opacity-20 rounded-full blur-3xl"></div>
+
       <form
         onSubmit={formik.handleSubmit}
         className="border border-[#00C767] rounded-lg px-6 py-5 shadow-lg w-full max-w-sm bg-white space-y-4"
@@ -194,7 +237,9 @@ function RegisterWithSearchParams() {
         </button>
         <div className="text-center text-xs flex flex-col items-center">
           <p>or continue with</p>
-          <button className="flex items-center justify-center p-2 bg-[#030F0F] text-white py-2 rounded-md">
+          <button
+            onClick={handleGoogleRegister}
+            className="flex items-center justify-center p-2 bg-[#030F0F] text-white py-2 rounded-md">
             <FaGoogle size={16} />
           </button>
           <p>
