@@ -16,3 +16,18 @@ h1, h2, h3 {
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in-out;
 }
+/* For WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* For Internet Explorer and Edge */
+body {
+  -ms-overflow-style: none;
+}
+
