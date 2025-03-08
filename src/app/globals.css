@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 body {
-  font-family: var(--font-roboto), sans-serif;
+  font-family: var(--font-jost), sans-serif;
   background-color: #F0FDF4;
 }
+
 h1, h2, h3 {
-  font-family: var(--font-poppins), sans-serif;
-  
+  font-family: var(--font-gluten), sans-serif;
 }
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
