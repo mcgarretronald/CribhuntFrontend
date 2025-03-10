@@ -43,7 +43,7 @@ export default function NavBar() {
           </Link>
         ) : (
           <Link href="/auth/welcome">
-            <h1 className="cursor-pointer text-2xl ">Sign Up</h1>
+            <h1 className="cursor-pointer md:text-2xl ">Sign Up</h1>
           </Link>
         )}
 
