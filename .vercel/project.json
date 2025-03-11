@@ -1,0 +1,15 @@
+{
+  "projectId": "prj_QteX5NO7Y5c5NoX9wKTdXcOsSmOV",
+  "orgId": "team_8pxPwhSJkYfzpYftY2mzphdo",
+  "settings": {
+    "createdAt": 1741696722872,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "22.x"
+  }
+}
