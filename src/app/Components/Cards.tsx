@@ -19,7 +19,7 @@ const Card1: React.FC<CardProps> = ({ imageSrc, title, text, link }) => {
                 alt={title}
                 width={350}
                 height={80}
-                className="mb-3"
+                className="mb-3 rounded-md"
             />
 
             {/* Title */}
@@ -30,7 +30,7 @@ const Card1: React.FC<CardProps> = ({ imageSrc, title, text, link }) => {
 
             {/* Link */}
             <Link
-                href="/listings"
+                href={link || "/listings"}
                 className="flex items-center  text-[#00C767] mt-3 text-sm font-medium hover:underline"
             >
                 {link} <FiChevronRight className="ml-1" />
@@ -39,4 +39,26 @@ const Card1: React.FC<CardProps> = ({ imageSrc, title, text, link }) => {
     );
 };
 
-export default Card1;
+const Card2: React.FC<Omit<CardProps, "link">> = ({ imageSrc, title, text }) => {
+    return (
+        <div className="flex flex-col items-center text-center p-10">
+            {/* Image */}
+            <Image
+                src={imageSrc}
+                alt={title}
+                width={350}
+                height={80}
+                className="mb-3 rounded-md"
+            />
+
+            {/* Title */}
+            <h2 className="text-lg font-medium ">{title}</h2>
+
+            {/* Description */}
+            <p className="mt-2 text-sm font-light">{text}</p>
+        </div>
+    );
+};
+
+export { Card1, Card2 };
+

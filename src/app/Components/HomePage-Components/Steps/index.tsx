@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Card1 from "../../Cards";
+import { Card1 } from "../../Cards";
 
 export default function Steps() {
   return (
@@ -13,7 +13,7 @@ export default function Steps() {
       </h1>
 
       {/* Card Container */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3 mt-10">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 mt-10">
         {[
           {
             imageSrc: "/images/search.png",
