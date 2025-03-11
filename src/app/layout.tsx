@@ -5,6 +5,8 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { Gluten, Jost } from "next/font/google"; // Import Gluten and Jost
 import { metadata } from "./metadata"; // Import metadata
 import "./globals.css";
+import NavBar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 
 const gluten = Gluten({
   variable: "--font-gluten",
@@ -42,7 +44,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             scope: "openid profile email",
           }}
         >
+          <NavBar/>
           {children}
+          <Footer/>
         </Auth0Provider>
       </body>
     </html>

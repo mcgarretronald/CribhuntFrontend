@@ -20,7 +20,7 @@ export default function NavBar() {
   const activeClass = (path: string): string => (pathname === path ? "text-[#00C767]" : "text-gray-700");
 
   return (
-    <nav className="flex items-center justify-between p-4">
+    <nav className="flex items-center justify-between py-4 px-10">
       {/* Logo */}
       <div className="flex items-center space-x-10">
         <Link href="/">

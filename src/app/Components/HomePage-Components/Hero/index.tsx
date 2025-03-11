@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 export default function HeroSection() {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 relative md:py-[150px] py-18 px-5'>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 relative md:py-[150px] py-18 px-10'>
        <div className="absolute top-20 left-10 w-72 h-72 bg-[#00C767] opacity-20 rounded-full blur-3xl"></div>
             <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#03624C] opacity-20 rounded-full blur-3xl"></div>
 
