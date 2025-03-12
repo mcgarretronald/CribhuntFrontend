@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaXTwitter } from 'react-icons/fa6';
@@ -6,6 +7,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaXTwitter } from 'r
 export default function Footer() {
     const [isLoading, setIsLoading] = useState(false);
     const [subscribed, setSubscribed] = useState(false);
+    const pathname = usePathname();
 
     const handleSubscribe = () => {
         setIsLoading(true);
@@ -15,8 +17,11 @@ export default function Footer() {
         }, 3000);
     };
 
+    // Hide footer on /auth pages
+    if (pathname.startsWith('/auth')) return null;
+
     return (
-        <div className='bg-[#DAFCE4] p-10 text-sm'>
+        <div className='bg-[#DAFCE4] p-10 text-sm mt-auto'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-10 pb-5'>
                 {/* Left Section */}
                 <section className='space-y-3'>
@@ -75,7 +80,6 @@ export default function Footer() {
                                 <span className="text-[12px]">YouTube</span>
                             </Link>
                         </div>
-
                     </div>
                 </section>
             </div>

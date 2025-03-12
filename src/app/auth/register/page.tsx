@@ -153,11 +153,8 @@ function RegisterWithSearchParams() {
   };
 
   return (
-    <div className="flex justify-center relative items-center min-h-screen px-4">
-        {/* Blurry Decorative Element */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#00C767] opacity-20 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#03624C] opacity-20 rounded-full blur-3xl"></div>
-
+    <div className="flex justify-center  items-center min-h-screen px-4">
+  
       <form
         onSubmit={formik.handleSubmit}
         className="border border-[#00C767] rounded-lg px-6 py-5 shadow-lg w-full max-w-sm bg-white space-y-4"
