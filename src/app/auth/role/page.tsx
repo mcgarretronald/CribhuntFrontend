@@ -16,11 +16,7 @@ export default function Role() {
     };
 
     return (
-        <div className="relative flex justify-center items-center text-center h-screen bg-gradient-to-br from-[#E6FFF1] to-[#FFFFFF]">
-
-            {/* Blurry Decorative Elements */}
-            <div className="absolute top-20 left-10 w-72 h-72 bg-[#00C767] opacity-20 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#03624C] opacity-20 rounded-full blur-3xl"></div>
+        <div className="flex justify-center items-center text-center h-screen bg-gradient-to-br from-[#E6FFF1] to-[#FFFFFF]">
 
             <div className="md:border border-[#00C767] rounded-4xl p-5 md:shadow-2xl bg-white z-10">
                 <Image
