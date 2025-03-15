@@ -17,8 +17,8 @@ export default function Footer() {
         }, 3000);
     };
 
-    // Hide footer on /auth pages
-    if (pathname.startsWith('/auth')) return null;
+    if (pathname === '/' || pathname.startsWith('/auth')) return null;
+
 
     return (
         <div className='bg-[#DAFCE4] p-10 text-sm mt-auto'>

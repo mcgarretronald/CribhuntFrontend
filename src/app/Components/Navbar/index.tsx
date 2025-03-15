@@ -52,7 +52,7 @@ export default function NavBar() {
     pathname === path ? "text-[#03624C] border-b-2 border-[#03624C]" : "text-green-500 hover:text-[#03624C]";
 
   return (
-    <nav className="flex justify-between items-center mx-1 md:mx-5 py-3 text-sm relative px-4 md:px-10">
+    <nav className="flex  justify-between items-center mx-1 md:mx-5 py-3 text-sm relative px-4 md:px-10">
       {/* Logo */}
       <div>
         <Link href="/">
