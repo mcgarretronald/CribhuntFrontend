@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function Hero() {
     return (
-        <div className="relative flex flex-col justify-center items-center text-center h-screen px-6">
+        <div className="relative flex flex-col justify-center items-center  text-center h-screen px-6">
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: 'url("/images/about.png")' }}
