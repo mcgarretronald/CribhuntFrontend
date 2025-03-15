@@ -1,103 +1,172 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { FiMenu, FiX } from "react-icons/fi";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { FiLogIn, FiUserPlus, FiUser } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function NavBar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const authPopupRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
+  // ✅ Check Authentication Every Render
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsAuthenticated(!!localStorage.getItem("access_token"));
+      const token = localStorage.getItem("access_token");
+
+      setIsAuthenticated(!!token);
+     
     }
   }, []);
 
-  const activeClass = (path: string): string =>
-    pathname === path ? "text-[#00C767]" : "text-gray-700 hover:font-medium";
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as Node;
+      if (
+        authPopupRef.current &&
+        !authPopupRef.current.contains(target) &&
+        event.target !== document.getElementById("auth-icon")
+      ) {
+        setIsAuthPopupOpen(false);
+      }
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(target) &&
+        event.target !== document.getElementById("menu-icon")
+      ) {
+        setIsMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const activeClass = (path: string) =>
+    pathname === path ? "text-[#03624C] border-b-2 border-[#03624C]" : "text-green-500 hover:text-[#03624C]";
 
   return (
-    <nav className="flex items-center justify-between py-4 md:px-10 px-2 bg-white shadow-sm fixed w-full z-50">
+    <nav className="flex justify-between items-center mx-1 md:mx-5 py-3 text-sm relative px-4 md:px-10">
       {/* Logo */}
-      <div className="flex items-center space-x-10">
+      <div>
         <Link href="/">
-          <Image src="/Logo/longLogo.svg" width={200} height={50} alt="logo" />
+          <Image src="/Logo/longLogo.svg" width={150} height={50} alt="logo" />
         </Link>
-
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center space-x-4">
-          <Link href="/home">
-            <p className={`cursor-pointer ${activeClass("/home")}`}>Home</p>
-          </Link>
-          <Link href="/listings">
-            <p className={`cursor-pointer ${activeClass("/listings")}`}>List Property</p>
-          </Link>
-          <Link href="/about">
-            <p className={`cursor-pointer ${activeClass("/about")}`}>About Us</p>
-          </Link>
-        </div>
       </div>
 
-      {/* Account Section - Shown Before Hamburger in Mobile View */}
-      <div className="flex md:hidden items-center space-x-4">
+      {/* Desktop Links */}
+      <div className="hidden md:flex space-x-6 items-center">
+        <Link href="/home" className={`px-2 py-1 ${activeClass("/home")}`}>Home</Link>
+        <Link href="/listings" className={`px-2 py-1 ${activeClass("/listings")}`}>List Property</Link>
+        <Link href="/about" className={`px-2 py-1 ${activeClass("/about")}`}>About Us</Link>
+      </div>
+
+      {/* Authentication Icon - Desktop */}
+      <div className="hidden md:flex items-center relative">
         {isAuthenticated ? (
           <Link href="/profile">
-            <Image src="/images/profile-icon.png" width={32} height={32} alt="Profile" className="rounded-full cursor-pointer" />
+            <Image 
+              src={"/images/profile-icon.png"}
+              width={40} height={32} 
+              alt="Profile" 
+              className="rounded-full cursor-pointer" 
+            />
           </Link>
         ) : (
-          <Link href="/auth/welcome" className=" font-semibold text-[#00C767]">Sign Up</Link>
-        )}
+          <>
+            <FiUser
+              id="auth-icon"
+              size={24}
+              className="cursor-pointer hover:text-green-500"
+              onClick={() => setIsAuthPopupOpen(!isAuthPopupOpen)}
+            />
 
-        {/* Mobile Menu Button */}
-        <button onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-        </button>
+            {/* Auth Popup */}
+            <AnimatePresence>
+              {isAuthPopupOpen && (
+                <motion.div
+                  ref={authPopupRef}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 top-10 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-48"
+                >
+                  <Link href="/auth/login" className="flex items-center space-x-2 bg-[#03624C] text-white px-4 py-2 rounded-md w-full mb-2">
+                    <FiLogIn /> <span>Login</span>
+                  </Link>
+                  <Link href="/auth/register" className="flex items-center space-x-2 border px-4 py-2 rounded-md hover:bg-gray-700 w-full">
+                    <FiUserPlus /> <span>Register</span>
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
+        )}
       </div>
 
-      {/* Desktop Account Section */}
-      <div className="hidden md:flex">
+      {/* Mobile Menu Button */}
+      <div className="md:hidden flex items-center relative">
         {isAuthenticated ? (
           <Link href="/profile">
-            <Image src="/images/profile-icon.png" width={40} height={32} alt="Profile" className="rounded-full cursor-pointer" />
+            <Image 
+              src={"/images/profile-icon.png"}
+              width={32} height={32} 
+              alt="Profile" 
+              className="rounded-full cursor-pointer mr-3" 
+            />
           </Link>
         ) : (
-          <Link href="/auth/welcome">
-                      <Link href="/auth/welcome" className="text-lg font-semibold text-[#00C767]">Sign Up</Link>
-          </Link>
+          <FiUser
+            id="auth-icon"
+            size={24}
+            className="cursor-pointer hover:text-green-500 mr-3"
+            onClick={() => setIsAuthPopupOpen(!isAuthPopupOpen)}
+          />
         )}
-      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed top-0 right-0 w-3/4 h-full bg-gradient-to-b from-white to-gray-100 backdrop-blur-lg shadow-xl rounded-l-2xl flex flex-col items-center space-y-8 py-12 md:hidden z-50"
-          >
-            <button onClick={() => setIsOpen(false)} className="absolute top-4 right-6 p-2 rounded-full bg-gray-200 hover:bg-gray-300">
-              <FiX size={28} className="text-gray-700" />
-            </button>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
-              className="flex flex-col items-center space-y-6"
+        <HiOutlineMenuAlt3
+          id="menu-icon"
+          size={30}
+          className="cursor-pointer"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        />
+
+        {/* Mobile Popup Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              ref={menuRef}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+              className="absolute right-0 top-10 bg-gray-900 text-white p-4 rounded-lg shadow-lg w-52 z-50 flex flex-col space-y-3"
             >
-              <Link href="/home" className={`text-xl font-semibold transition-all duration-200 transform hover:scale-105 ${activeClass("/home")}`} onClick={() => setIsOpen(false)}>Home</Link>
-              <Link href="/listings" className={`text-xl font-semibold transition-all duration-200 transform hover:scale-105 ${activeClass("/listings")}`} onClick={() => setIsOpen(false)}>List Property</Link>
-              <Link href="/about" className={`text-xl font-semibold transition-all duration-200 transform hover:scale-105 ${activeClass("/about")}`} onClick={() => setIsOpen(false)}>About Us</Link>
+              <Link href="/home" className="px-2 py-1 text-white hover:text-green-400" onClick={() => setIsMenuOpen(false)}>Home</Link>
+              <Link href="/listings" className="px-2 py-1 text-white hover:text-green-400" onClick={() => setIsMenuOpen(false)}>List Property</Link>
+              <Link href="/about" className="px-2 py-1 text-white hover:text-green-400" onClick={() => setIsMenuOpen(false)}>About Us</Link>
+              <hr className="border-gray-600" />
+              {!isAuthenticated && (
+                <>
+                  <Link href="/auth/login" className="flex items-center space-x-2 bg-[#03624C] text-white px-4 py-2 rounded-md w-full mb-2">
+                    <FiLogIn /> <span>Login</span>
+                  </Link>
+                  <Link href="/auth/register" className="flex items-center space-x-2 border px-4 py-2 rounded-md hover:bg-gray-700 w-full">
+                    <FiUserPlus /> <span>Register</span>
+                  </Link>
+                </>
+              )}
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </div>
     </nav>
   );
 }

@@ -9,7 +9,7 @@ import Support from '../Components/HomePage-Components/Support'
 
 export default function HomePage() {
   return (
-    <div>
+    <div className='overflow-x-hidden'>
         <HeroSection />
         <Steps/>
         <Features/>

@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
           clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
           authorizationParams={{
-            redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI || "https://cribhunt.vercel.app/callback",
+            redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000/callback",
             audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
             scope: "openid profile email",
           }}
