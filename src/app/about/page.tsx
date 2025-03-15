@@ -1,12 +1,15 @@
 import React from 'react'
-
+import Hero from '../Components/AboutPageComponents/hero'
+import Vision from '../Components/AboutPageComponents/Vision'
+import Mission from '../Components/AboutPageComponents/Mission'
+import WhyChooseUs from '../Components/AboutPageComponents/WhyChooseUs'
 export default function About() {
   return (
     <div>
-
-        <div>
-            <h1 className='border-2 h-[5000px]'>About page </h1>
-        </div>
+      <Hero/>
+      <Vision/>
+      <Mission/>
+      <WhyChooseUs/>
     </div>
   )
 }

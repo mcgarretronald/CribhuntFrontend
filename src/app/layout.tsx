@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { Gluten, Jost } from "next/font/google"; // Import Gluten and Jost
-import { metadata } from "./metadata"; // Import metadata
+import { Gluten, Jost } from "next/font/google"; 
+import { metadata } from "./metadata"; 
 import "./globals.css";
 import NavBar from "./Components/Navbar";
 import Footer from "./Components/Footer";
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
           clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
           authorizationParams={{
-            redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI || "http://localhost:3000/callback",
+            redirect_uri:"https://cribhunt.vercel.app/callback",
             audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
             scope: "openid profile email",
           }}
