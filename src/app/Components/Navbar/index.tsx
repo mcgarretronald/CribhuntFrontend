@@ -20,9 +20,7 @@ export default function NavBar() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("access_token");
-
       setIsAuthenticated(!!token);
-     
     }
   }, []);
 
@@ -52,7 +50,7 @@ export default function NavBar() {
     pathname === path ? "text-[#03624C] border-b-2 border-[#03624C]" : "text-green-500 hover:text-[#03624C]";
 
   return (
-    <nav className="flex  justify-between items-center mx-1 md:mx-5 py-3 text-sm relative px-4 md:px-10">
+    <nav className="flex justify-between items-center mx-1 md:mx-5 py-3 text-sm relative px-4 md:px-10">
       {/* Logo */}
       <div>
         <Link href="/">
@@ -96,7 +94,7 @@ export default function NavBar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 top-10 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-48"
+                  className="fixed top-16 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-48 z-[100]"
                 >
                   <Link href="/auth/login" className="flex items-center space-x-2 bg-[#03624C] text-white px-4 py-2 rounded-md w-full mb-2">
                     <FiLogIn /> <span>Login</span>
@@ -147,7 +145,7 @@ export default function NavBar() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-0 top-10 bg-gray-900 text-white p-4 rounded-lg shadow-lg w-52 z-50 flex flex-col space-y-3"
+              className="fixed top-16 right-5 bg-gray-900 text-white p-4 rounded-lg shadow-lg w-52 z-[100] flex flex-col space-y-3"
             >
               <Link href="/home" className="px-2 py-1 text-white hover:text-green-400" onClick={() => setIsMenuOpen(false)}>Home</Link>
               <Link href="/listings" className="px-2 py-1 text-white hover:text-green-400" onClick={() => setIsMenuOpen(false)}>List Property</Link>
